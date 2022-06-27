@@ -62,11 +62,11 @@ func HandleData(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleHeader(w http.ResponseWriter, r *http.Request) {
-	a, err := strconv.Atoi(r.Header.Get("A"))
+	a, err := strconv.Atoi(r.Header.Get("a"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
-	b, err := strconv.Atoi(r.Header.Get("B"))
+	b, err := strconv.Atoi(r.Header.Get("b"))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}

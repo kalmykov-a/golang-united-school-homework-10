@@ -21,6 +21,11 @@ main function reads host/port from env just for an example, flavor it following 
 func Start(host string, port int) {
 	router := mux.NewRouter()
 
+	router.HandleFunc("name/{PARAM}", HandleParam).Methods(http.MethodGet)
+	router.HandleFunc("/bad", HandleBad).Methods(http.MethodGet)
+	router.HandleFunc("/data", HandleData).Methods(http.MethodPost)
+	router.HandleFunc("/header", HandleHeader).Methods(http.MethodGet)
+
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), router); err != nil {
 		log.Fatal(err)
@@ -35,4 +40,23 @@ func main() {
 		port = 8081
 	}
 	Start(host, port)
+}
+
+func HandleBad(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusInternalServerError)
+}
+
+func HandleParam(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)["PARAM"]
+	fmt.Fprintf(w, "Hello, %s!", param)
+}
+
+func HandleData(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, " I got message:\n%s", r.Body)
+}
+
+func HandleHeader(w http.ResponseWriter, r *http.Request) {
+	a, _ := strconv.Atoi(r.Header.Get("a"))
+	b, _ := strconv.Atoi(r.Header.Get("b"))
+	w.Header().Set("a+b", string(a+b))
 }

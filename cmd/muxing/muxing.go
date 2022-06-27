@@ -53,7 +53,7 @@ func HandleParam(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleData(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, " I got message:\n%s", r.Body)
+	fmt.Fprintf(w, "I got message:\n%s", r.Body)
 }
 
 func HandleHeader(w http.ResponseWriter, r *http.Request) {

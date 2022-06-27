@@ -25,7 +25,7 @@ func Start(host string, port int) {
 	router.HandleFunc("/name/{PARAM}", HandleParam).Methods(http.MethodGet)
 	router.HandleFunc("/bad", HandleBad).Methods(http.MethodGet)
 	router.HandleFunc("/data", HandleData).Methods(http.MethodPost)
-	router.HandleFunc("/header", HandleHeader).Methods(http.MethodGet)
+	router.HandleFunc("/headers", HandleHeader).Methods(http.MethodGet)
 	router.HandleFunc("/", HandleDefault)
 
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
@@ -62,8 +62,14 @@ func HandleData(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleHeader(w http.ResponseWriter, r *http.Request) {
-	a, _ := strconv.Atoi(r.Header.Get("a"))
-	b, _ := strconv.Atoi(r.Header.Get("b"))
+	a, err := strconv.Atoi(r.Header.Get("A"))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+	b, err := strconv.Atoi(r.Header.Get("B"))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 	w.Header().Set("a+b", strconv.Itoa(a+b))
 }
 

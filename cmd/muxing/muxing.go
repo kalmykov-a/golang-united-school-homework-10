@@ -25,7 +25,7 @@ func Start(host string, port int) {
 	router.HandleFunc("/name/{PARAM}", HandleParam).Methods(http.MethodGet)
 	router.HandleFunc("/bad", HandleBad).Methods(http.MethodGet)
 	router.HandleFunc("/data", HandleData).Methods(http.MethodPost)
-	router.HandleFunc("/headers", HandleHeader).Methods(http.MethodGet)
+	router.HandleFunc("/headers", HandleHeader).Methods(http.MethodPost)
 	router.HandleFunc("/", HandleDefault)
 
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))

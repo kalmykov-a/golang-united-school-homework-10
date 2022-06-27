@@ -58,5 +58,5 @@ func HandleData(w http.ResponseWriter, r *http.Request) {
 func HandleHeader(w http.ResponseWriter, r *http.Request) {
 	a, _ := strconv.Atoi(r.Header.Get("a"))
 	b, _ := strconv.Atoi(r.Header.Get("b"))
-	w.Header().Set("a+b", string(a+b))
+	w.Header().Set("a+b", strconv.Itoa(a+b))
 }

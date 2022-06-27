@@ -53,13 +53,14 @@ func HandleParam(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleData(w http.ResponseWriter, r *http.Request) {
+
 	fmt.Fprintf(w, "I got message:\n%s", r.Body)
 }
 
 func HandleHeader(w http.ResponseWriter, r *http.Request) {
 	a, _ := strconv.Atoi(r.Header.Get("a"))
 	b, _ := strconv.Atoi(r.Header.Get("b"))
-	w.Header().Set("a+b", strconv.Itoa(a+b))
+	w.Header().Add("a+b", strconv.Itoa(a+b))
 }
 
 func HandleDefault(w http.ResponseWriter, r *http.Request) {
